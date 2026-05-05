@@ -1,0 +1,20 @@
+{
+  "name": "zeidler-cowork-marketplace",
+  "owner": {
+    "name": "ZEIDLER GLAS + FENSTER GmbH",
+    "email": "e.zeidler@zeidler-glas.de"
+  },
+  "metadata": {
+    "description": "Internes Plugin-Marketplace fuer Zeidler Glas + Fenster GmbH. Enthaelt Standardvorlagen (Briefing, Angebot, Aufmass usw.) fuer Cowork.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "zeidler-vorlagen",
+      "source": "./plugins/zeidler-vorlagen",
+      "description": "Hausvorlagen fuer Projektbriefings und weitere Standarddokumente im Zeidler-Layout (Logo, Hausfarben, Footer, immer als PDF).",
+      "version": "0.1.0",
+      "category": "Hausvorlagen"
+    }
+  ]
+}

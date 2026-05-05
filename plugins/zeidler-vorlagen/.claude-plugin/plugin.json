@@ -1,0 +1,16 @@
+{
+  "name": "zeidler-vorlagen",
+  "version": "0.1.0",
+  "description": "Hausvorlagen fuer Zeidler Glas + Fenster GmbH. Stellt Skills bereit, die Standarddokumente (Projektbriefing usw.) automatisch im Hauslayout als PDF erzeugen.",
+  "author": {
+    "name": "ZEIDLER GLAS + FENSTER GmbH",
+    "email": "e.zeidler@zeidler-glas.de"
+  },
+  "keywords": [
+    "zeidler",
+    "vorlagen",
+    "briefing",
+    "pdf",
+    "corporate-design"
+  ]
+}

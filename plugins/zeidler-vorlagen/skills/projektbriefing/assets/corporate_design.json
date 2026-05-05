@@ -1,0 +1,115 @@
+{
+  "_kommentar": "Hausfarben und Footer-Daten der ZEIDLER GLAS + FENSTER GmbH. Felder hier koennen jederzeit angepasst werden, ohne dass das Skript geaendert werden muss. Farben als HEX (#rrggbb).",
+  "firma": {
+    "name": "ZEIDLER GLAS + FENSTER GmbH",
+    "slogan": "Die rollende Glaserei",
+    "strasse": "Hallesche Straße 27",
+    "plz_ort": "06808 Bitterfeld-Wolfen",
+    "land": "D",
+    "telefon": "(0 34 93) 6 10 46",
+    "fax": "(0 34 93) 6 10 50",
+    "email": "kontakt@zeidler-glas.de",
+    "web": "www.zeidler-glas.de",
+    "geschaeftsfuehrer_zeile_1": "Glasermeister Roland Zeidler",
+    "geschaeftsfuehrer_zeile_2": "Glasermeister Eberhard Zeidler",
+    "registergericht": "Amtsgericht Stendal HRB 10944",
+    "ust_id": "DE811813324",
+    "bank_name": "Kreissparkasse Anhalt-Bitterfeld",
+    "bank_iban": "DE65 8005 3722 0305 0393 50",
+    "bank_bic": "NOLADE21BTF"
+  },
+  "farben": {
+    "primaer": "#0F7037",
+    "primaer_dunkel": "#0A4F26",
+    "sekundaer": "#A8C9AE",
+    "akzent": "#C7A04C",
+    "text": "#1A1A1A",
+    "text_leise": "#666666",
+    "tabellenkopf_hintergrund": "#0F7037",
+    "tabellenkopf_text": "#FFFFFF",
+    "tabellenzeile_alternativ": "#F1F7F2",
+    "trennlinie": "#0F7037",
+    "metadata_hintergrund": "#F1F7F2",
+    "callout_hintergrund": "#FFF8E1",
+    "callout_rand": "#E6A300",
+    "callout_titel": "#8C5800"
+  },
+  "schrift": {
+    "familie": "Helvetica",
+    "groesse_fliesstext": 10,
+    "groesse_h1": 20,
+    "groesse_h1_label": 8,
+    "groesse_h2": 13,
+    "groesse_h3": 11,
+    "groesse_meta": 9,
+    "groesse_kopfzeile": 9,
+    "groesse_fusszeile": 7,
+    "groesse_callout_titel": 9,
+    "groesse_callout_text": 9
+  },
+  "seite": {
+    "format": "A4",
+    "rand_oben_mm": 44,
+    "rand_unten_mm": 32,
+    "rand_links_mm": 20,
+    "rand_rechts_mm": 20
+  },
+  "kopfzeile": {
+    "logo_breite_mm": 55,
+    "jubilaeum_signet_breite_mm": 18,
+    "abstand_oben_mm": 12,
+    "abstand_strich_mm": 4,
+    "strich_staerke_pt": 1.5,
+    "akzent_streifen_oben_mm": 3,
+    "akzent_streifen_hoehe_mm": 2,
+    "akzent_streifen_anzeigen": true,
+    "kontaktstreifen": {
+      "anzeigen": true,
+      "abstand_unter_strich_mm": 3,
+      "schriftgroesse_pt": 7.5,
+      "trennzeichen": "  ·  ",
+      "elemente": [
+        "Tel. {firma.telefon}",
+        "{firma.email}",
+        "{firma.web}"
+      ],
+      "letztes_element_hervorgehoben": true,
+      "_kommentar": "Streifen rechtsbuendig direkt unter dem Trennstrich. Letztes Element wird in Hausgruen fett dargestellt - perfekt fuer die Webseite."
+    },
+    "_kommentar": "Logo links, Jubilaeum-Signet rechts. Signet bewusst kleiner damit es zur Logo-Hoehe passt. Der Trennstrich liegt im oberen Seitenrand, NICHT im Inhaltsbereich."
+  },
+  "fusszeile": {
+    "_kommentar": "Im Projektbriefing keine Bankdaten - die brauchen wir nur auf Rechnungen. Hier 3 Spalten: Firma | Geschaeftsfuehrer | Kontakt. Seitenzahl als kleiner Streifen rechts unten.",
+    "spalten": [
+      {
+        "breite_anteil": 1.0,
+        "zeilen": [
+          "{firma.name}",
+          "{firma.strasse}",
+          "{firma.plz_ort}",
+          "Ust-ID-Nr. {firma.ust_id}"
+        ],
+        "fett_zeile_1": true
+      },
+      {
+        "breite_anteil": 1.0,
+        "zeilen": [
+          "Geschäftsführer:",
+          "{firma.geschaeftsfuehrer_zeile_1}",
+          "{firma.geschaeftsfuehrer_zeile_2}",
+          "{firma.registergericht}"
+        ]
+      },
+      {
+        "breite_anteil": 1.0,
+        "zeilen": [
+          "Fon: {firma.telefon}",
+          "Fax: {firma.fax}",
+          "E-Mail: {firma.email}",
+          "Webseite: {firma.web}"
+        ]
+      }
+    ],
+    "seitenzahl_rechts": "Seite {seite} / {seiten_gesamt}"
+  }
+}
