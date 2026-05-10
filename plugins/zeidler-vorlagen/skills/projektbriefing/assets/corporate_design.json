@@ -50,7 +50,7 @@
   "seite": {
     "format": "A4",
     "rand_oben_mm": 44,
-    "rand_unten_mm": 32,
+    "rand_unten_mm": 18,
     "rand_links_mm": 20,
     "rand_rechts_mm": 20
   },
@@ -79,37 +79,8 @@
     "_kommentar": "Logo links, Jubilaeum-Signet rechts. Signet bewusst kleiner damit es zur Logo-Hoehe passt. Der Trennstrich liegt im oberen Seitenrand, NICHT im Inhaltsbereich."
   },
   "fusszeile": {
-    "_kommentar": "Im Projektbriefing keine Bankdaten - die brauchen wir nur auf Rechnungen. Hier 3 Spalten: Firma | Geschaeftsfuehrer | Kontakt. Seitenzahl als kleiner Streifen rechts unten.",
-    "spalten": [
-      {
-        "breite_anteil": 1.0,
-        "zeilen": [
-          "{firma.name}",
-          "{firma.strasse}",
-          "{firma.plz_ort}",
-          "Ust-ID-Nr. {firma.ust_id}"
-        ],
-        "fett_zeile_1": true
-      },
-      {
-        "breite_anteil": 1.0,
-        "zeilen": [
-          "Geschäftsführer:",
-          "{firma.geschaeftsfuehrer_zeile_1}",
-          "{firma.geschaeftsfuehrer_zeile_2}",
-          "{firma.registergericht}"
-        ]
-      },
-      {
-        "breite_anteil": 1.0,
-        "zeilen": [
-          "Fon: {firma.telefon}",
-          "Fax: {firma.fax}",
-          "E-Mail: {firma.email}",
-          "Webseite: {firma.web}"
-        ]
-      }
-    ],
+    "_kommentar": "Im Projektbriefing nur die Seitenzahl unten rechts, keine Firmen-/Kontaktdaten und keine Trennlinie. Bei leerer 'spalten'-Liste zeichnet das Skript nur 'seitenzahl_rechts' am unteren Blattrand.",
+    "spalten": [],
     "seitenzahl_rechts": "Seite {seite} / {seiten_gesamt}"
   }
 }

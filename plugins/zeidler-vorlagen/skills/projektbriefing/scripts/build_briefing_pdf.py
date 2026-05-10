@@ -794,22 +794,31 @@ class HeaderFooter:
 
         ctx = {"firma": firma, "seite": c.getPageNumber(), "seiten_gesamt": total_pages}
 
-        spalten = fz.get("spalten")
-        # Fallback fuer altes 2-Zeilen-Schema
-        if not spalten:
-            spalten = [
-                {"breite_anteil": 1.0, "zeilen": [fz.get("links_zeile_1", "{firma.name}"), fz.get("links_zeile_2", "")]},
-                {"breite_anteil": 1.0, "zeilen": [fz.get("rechts", "Seite {seite} / {seiten_gesamt}")]},
-            ]
+        spalten = fz.get("spalten") or []
+        # Nur tatsaechlich befuellte Spalten verwenden (leere Strings/None ignorieren).
+        spalten = [
+            s for s in spalten
+            if any((z or "").strip() for z in (s.get("zeilen") or []))
+        ]
 
         margin = 20 * mm
+        bottom_y = 12 * mm  # untere Innenkante
+
+        # Sonderfall: keine Spalten -> nur Seitenzahl unten mittig, keine Trennlinie.
+        if not spalten:
+            seiten_template = fz.get("seitenzahl_rechts")
+            if seiten_template:
+                c.setFont("Helvetica", font_size)
+                c.setFillColor(text_color)
+                c.drawCentredString(page_w / 2, bottom_y, fmt(seiten_template, ctx))
+            return
+
         usable_w = page_w - 2 * margin
         gesamt_anteil = sum(float(s.get("breite_anteil", 1.0)) for s in spalten) or 1.0
 
         # Platzbedarf bestimmen (max. Zeilenzahl)
         max_zeilen = max(len([z for z in s.get("zeilen", []) if z is not None]) for s in spalten)
         block_h = max_zeilen * leading
-        bottom_y = 12 * mm  # untere Innenkante
 
         # Trennlinie ueber Footer
         c.setStrokeColor(line_color)
