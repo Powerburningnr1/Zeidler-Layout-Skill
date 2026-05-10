@@ -79,7 +79,7 @@
     "_kommentar": "Logo links, Jubilaeum-Signet rechts. Signet bewusst kleiner damit es zur Logo-Hoehe passt. Der Trennstrich liegt im oberen Seitenrand, NICHT im Inhaltsbereich."
   },
   "fusszeile": {
-    "_kommentar": "Im Projektbriefing nur die Seitenzahl unten rechts, keine Firmen-/Kontaktdaten und keine Trennlinie. Bei leerer 'spalten'-Liste zeichnet das Skript nur 'seitenzahl_rechts' am unteren Blattrand.",
+    "_kommentar": "Im Projektbriefing nur die Seitenzahl unten mittig, keine Firmen-/Kontaktdaten und keine Trennlinie. Bei leerer 'spalten'-Liste zeichnet das Skript nur 'seitenzahl_rechts' am unteren Blattrand.",
     "spalten": [],
     "seitenzahl_rechts": "Seite {seite} / {seiten_gesamt}"
   }
