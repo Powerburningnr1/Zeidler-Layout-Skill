@@ -154,13 +154,17 @@
 
   // P26-Projektmap (id -> "P26-1234"). Wird per Bulk-Suche befüllt.
   // Filter: NUR Projekte ab 2026 sind erlaubt (P26-, später P27- usw.).
-  const P26_CACHE_KEY = "zglas_p26_cache_v2";
+  const P26_CACHE_KEY = "zglas_p26_cache_v3";
   const P26_CACHE_TTL_MS = 60 * 60 * 1000; // 1 Stunde
   let p26Projects = {};
   let p26LastLoad = 0;
+  // Alte Cache-Versionen aufräumen, damit leere Einträge aus früheren Bugs nicht
+  // dauerhaft den Filter lahmlegen.
+  try { localStorage.removeItem("zglas_p26_cache_v2"); } catch (e) {}
+  try { localStorage.removeItem("zglas_proj_cache_v1"); } catch (e) {}
   try {
     const cache = JSON.parse(localStorage.getItem(P26_CACHE_KEY) || "{}");
-    if (cache && cache.data && cache.ts) {
+    if (cache && cache.data && cache.ts && Object.keys(cache.data).length > 0) {
       p26Projects = cache.data;
       p26LastLoad = cache.ts;
     }
@@ -175,7 +179,7 @@
 
   function projNumber(id) {
     if (!id) return "";
-    return p26Projects[id] || "";
+    return p26Projects[id] || ("#" + id);
   }
 
   function isP26(id) {
@@ -199,6 +203,11 @@
       }
       offset += items.length;
       if (items.length < PAGE) break;
+    }
+    // Sicherheit: leere Map NIEMALS speichern und NIEMALS als „geladen" markieren —
+    // sonst hängt der Filter dauerhaft im Fallback.
+    if (Object.keys(map).length === 0) {
+      throw new Error("P26-Projektliste leer — mcp_table_search lieferte keine Ergebnisse (Allowlist?).");
     }
     p26Projects = map;
     p26LastLoad = Date.now();
@@ -534,22 +543,41 @@
     let loadErr = null;
     try {
       userCount = await loadUsers();
-      // P26-Map zuerst — danach wissen wir, welche Datensätze überhaupt zählen
+      // P26-Map laden — wenn das fehlschlägt, fallen wir auf "kein Filter" zurück
       const needsLoad = !p26LastLoad || (Date.now() - p26LastLoad) >= P26_CACHE_TTL_MS;
       if (needsLoad) debug("Lade P26-Projektliste …");
-      await loadP26Projects();
+      let p26LoadErr = null;
+      try {
+        await loadP26Projects();
+      } catch (eP) {
+        p26LoadErr = eP;
+        console.warn("P26-Projektliste konnte nicht geladen werden:", eP);
+      }
+      if (p26LoadErr) {
+        setStatus("err", "P26-Filter inaktiv — siehe Debug-Zeile");
+        debug("⚠ P26-Laden fehlgeschlagen: " + (p26LoadErr.message || p26LoadErr));
+      }
       const results = await Promise.all([loadTasks(), loadTours()]);
       tasksRaw = results[0]; toursRaw = results[1];
-      // Strikter Filter: nur P26-Projekte
-      tasks = tasksRaw.filter(t => isP26(t.kunde_lieferant_projekt_id));
-      tours = toursRaw.filter(t => isP26(t.dataset_id));
+      const p26Count = Object.keys(p26Projects).length;
+      if (p26Count > 0) {
+        // Strikter Filter: nur P26-Projekte
+        tasks = tasksRaw.filter(t => isP26(t.kunde_lieferant_projekt_id));
+        tours = toursRaw.filter(t => isP26(t.dataset_id));
+      } else {
+        // Fallback: keine P26-Map → alles zeigen statt nichts
+        tasks = tasksRaw;
+        tours = toursRaw;
+      }
     } catch (e) {
       loadErr = e;
       console.error("Load failed:", e);
     }
-    debug("P26-Projekte: " + Object.keys(p26Projects).length +
-          " · Aufgaben " + tasks.length + " (von " + tasksRaw.length + ")" +
-          " · Touren " + tours.length + " (von " + toursRaw.length + ")");
+    const p26n = Object.keys(p26Projects).length;
+    debug((p26n === 0 ? "⚠ P26-Filter inaktiv · " : "")
+        + "P26-Projekte: " + p26n
+        + " · Aufgaben " + tasks.length + " (von " + tasksRaw.length + ")"
+        + " · Touren " + tours.length + " (von " + toursRaw.length + ")");
 
     if (loadErr) {
       setStatus("err", "Fehler beim Laden");
